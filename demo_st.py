@@ -6,7 +6,11 @@ from PIL import Image
 @st.cache_resource
 def load_pipeline(version):
     model_name = f"Spestly/OdysseyXL-{version}"
-    return DiffusionPipeline.from_pretrained(model_name)
+    try:
+        return DiffusionPipeline.from_pretrained(model_name)
+    except Exception as e:
+        st.error(f"Failed to load model: {e}")
+        return None
 
 # Streamlit app
 def main():
@@ -17,7 +21,7 @@ def main():
     st.sidebar.header("Model Selection")
     model_version = st.sidebar.selectbox(
         "Select OdysseyXL Version",
-        ("Spestly/OdysseyXL-3.0", "Spestly/OdysseyXL-2.0", "Spestly/OdysseyXL-1.0"),
+        ("3.0", "2.0", "1.0"),
         index=0
     )
 
@@ -32,12 +36,22 @@ def main():
         with st.spinner("Loading the model and generating the image..."):
             # Load the selected pipeline
             pipe = load_pipeline(model_version)
-            
-            # Generate the image
-            image = pipe(prompt).images[0]
-            
-            # Display the image
-            st.image(image, caption=f"Generated with OdysseyXL-{model_version}", use_column_width=True)
+            if pipe:
+                try:
+                    # Generate the image
+                    image = pipe(prompt).images[0]
+                    # Display the image
+                    st.image(image, caption=f"Generated with OdysseyXL-{model_version}", use_column_width=True)
+
+                    # Download option
+                    st.download_button(
+                        label="Download Image",
+                        data=image.tobytes(),
+                        file_name="generated_image.png",
+                        mime="image/png"
+                    )
+                except Exception as e:
+                    st.error(f"Failed to generate image: {e}")
 
 if __name__ == "__main__":
     main()
