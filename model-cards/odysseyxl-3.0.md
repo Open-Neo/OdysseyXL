@@ -89,7 +89,7 @@ While OdysseyXL 3.0 sets a new standard, it’s not without limitations:
 The journey doesn’t stop here. Future plans for OdysseyXL include:
 
 - Expanding datasets further to encompass rare and unique themes.
-- Development of OdysseyXL 4.0 with multimodal capabilities.
+- Development of OdysseyXL 4.0 with plans for an Ultra series for 2.0+
 - Optimization for mobile and edge devices.
 
 ---
