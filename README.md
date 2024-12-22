@@ -70,7 +70,7 @@ image = pipe(prompt).images[0]
 
 ## 📖 License
 
-All models in the OdysseyXL family are shared under the **Apache Labs Community License**. Please ensure you adhere to the terms and conditions outlined in the license.
+All models in the OdysseyXL family are shared under the **Stability.ai Community license**. Please ensure you adhere to the terms and conditions outlined in the license.
 
 ---
 
