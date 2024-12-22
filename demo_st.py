@@ -17,7 +17,7 @@ def main():
     st.sidebar.header("Model Selection")
     model_version = st.sidebar.selectbox(
         "Select OdysseyXL Version",
-        ("3.0", "2.0", "1.0"),
+        ("Spestly/OdysseyXL-3.0", "Spestly/OdysseyXL-2.0", "Spestly/OdysseyXL-1.0"),
         index=0
     )
 
