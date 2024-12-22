@@ -34,17 +34,18 @@ The original model that started it all. Great for:
 To get started with any OdysseyXL model, install the `diffusers` library and load the model using the following example:
 
 ```python
+pip install diffusers
+```
+
+Now we can load the model. For this example we will use OdysseyXL-3.0
+
+```python
 from diffusers import DiffusionPipeline
 
-# Load OdysseyXL 3.0
-pipe = DiffusionPipeline.from_pretrained("apache-labs/OdysseyXL-3.0")
+pipe = DiffusionPipeline.from_pretrained("Spestly/OdysseyXL-3.0")
 
-# Define your prompt
-prompt = "A futuristic cityscape at sunset, ultra-detailed, 8k resolution"
-
-# Generate an image
+prompt = "Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"
 image = pipe(prompt).images[0]
-image.show()
 ```
 
 ---
