@@ -44,7 +44,7 @@ git clone https://github.com/Aayan-Mishra/OdysseyXL.git
 cd OdysseyXL
 python3 download-and-infrence.py
 ```
-And boom! You can now download the models and inference them!
+and Boom! You can now download the models and inference them!
 ---
 
 ## 🌟 Features
