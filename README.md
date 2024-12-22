@@ -57,11 +57,11 @@ and Boom! You can now download the models and inference them!
 
 ## 📂 Available Models
 
-| Model          | Size       | API Access               | Usage Example |
+| Model          | Size       | API Access               | Hardware |
 |----------------|------------|--------------------------|---------------|
-| OdysseyXL 3.0 | Large      | Civitai, HuggingFace, DiffuseCraft      | See above     |
-| OdysseyXL 2.0 | Medium     | Civitai, HuggingFace  | See examples  |
-| OdysseyXL 1.0 | Small      | Civitai, HuggingFace  | See examples  |
+| OdysseyXL 3.0 | Large      | Civitai, HuggingFace, DiffuseCraft      | 3xA100     |
+| OdysseyXL 2.0 | Medium     | Civitai, HuggingFace  | 1xA100  |
+| OdysseyXL 1.0 | Small      | Civitai, HuggingFace  | 1xL40s  |
 
 ---
 
