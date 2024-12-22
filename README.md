@@ -37,17 +37,14 @@ To get started with any OdysseyXL model, install the `diffusers` library and loa
 pip install diffusers
 ```
 
-Now we can load the model. For this example we will use OdysseyXL-3.0
+Now we can the generation script. For this example we will use OdysseyXL-3.0
 
 ```python
-from diffusers import DiffusionPipeline
-
-pipe = DiffusionPipeline.from_pretrained("Spestly/OdysseyXL-3.0")
-
-prompt = "Astronaut in a jungle, cold color palette, muted colors, detailed, 8k"
-image = pipe(prompt).images[0]
+git clone https://github.com/Aayan-Mishra/OdysseyXL.git
+cd OdysseyXL
+python3 download-and-infrence.py
 ```
-
+And boom! You can now download the models and inference them!
 ---
 
 ## 🌟 Features
