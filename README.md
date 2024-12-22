@@ -77,6 +77,7 @@ Join the OdysseyXL community to share your creations, report issues, and stay up
 
 - **Discord**: Coming Soon
 - **Twitter**: [@Spestly](https://twitter.com/Spestly)
+- **Submit your generated images!**: [Submit](https://tally.so/r/mZPblv)
 
 For any questions or support, feel free to reach out via email at [aayan.mishra@proton.me](mailto:aayan.mishra@proton.me).
 
