@@ -59,9 +59,9 @@ and Boom! You can now download the models and inference them!
 
 | Model          | Size       | API Access               | Hardware |
 |----------------|------------|--------------------------|---------------|
-| OdysseyXL 3.0 | Large      | Civitai, HuggingFace, DiffuseCraft      | 3xA100     |
-| OdysseyXL 2.0 | Medium     | Civitai, HuggingFace  | 1xA100  |
-| OdysseyXL 1.0 | Small      | Civitai, HuggingFace  | 1xL40s  |
+| OdysseyXL 3.0 | Large      | [Civitai](https://civitai.com/models/1055457/odysseyxl), [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-3.0), [DiffuseCraft](https://huggingface.co/spaces/r3gm/DiffuseCraft)      | 1xA100     |
+| OdysseyXL 2.0 | Medium     | [Civitai](https://civitai.com/models/1055457?modelVersionId=1187743), [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-2.0)  | 1xL40S  |
+| OdysseyXL 1.0 | Small      | [Civitai](https://civitai.com/models/1055457?modelVersionId=1187335), [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-1.0)  | 1xP100  |
 
 ---
 
