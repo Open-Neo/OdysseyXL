@@ -31,6 +31,7 @@ def choose_model():
         1: "Spestly/OdysseyXL-1.0",
         2: "Spestly/OdysseyXL-2.0",
         3: "Spestly/OdysseyXL-3.0",
+        4: "Spestly/OdysseyXL-4.0",
     }
 
     for option, model in models.items():
