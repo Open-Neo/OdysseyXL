@@ -11,7 +11,13 @@ Welcome to the **OdysseyXL** family! This repository showcases the cutting-edge 
 ![Grid](https://raw.githubusercontent.com/Aayan-Mishra/Images/refs/heads/main/OdysseyXL%20FINAL.png)
 
 ### **OdysseyXL 3.0**
-The latest and most advanced member of the family. Optimized for ultra-realism and vibrant creativity, OdysseyXL 3.0 is perfect for:
+The most advanced SOTA generative model in the OdysseyXL Family, OdysseyXL 4.0 is perfect for:
+- Ultra realism
+- Full potential of OdysseyXL
+- Cinematic and photographic images
+
+### **OdysseyXL 3.0**
+Optimized for ultra-realism and vibrant creativity, OdysseyXL 3.0 is perfect for:
 - High-detail art generation
 - Photorealistic renders
 - Creative storytelling
@@ -59,6 +65,7 @@ and Boom! You can now download the models and inference them!
 
 | Model          | Size       | API Access               | Hardware |
 |----------------|------------|--------------------------|---------------|
+|OdysseyXL 4.0   | Large      | [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-4.0), [DiffuseCraftMod](https://huggingface.co/spaces/John6666/DiffuseCraftMod) | 1xA100
 | OdysseyXL 3.0 | Large      | [Civitai](https://civitai.com/models/1055457/odysseyxl), [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-3.0), [DiffuseCraft](https://huggingface.co/spaces/r3gm/DiffuseCraft)      | 1xA100     |
 | OdysseyXL 2.0 | Medium     | [Civitai](https://civitai.com/models/1055457?modelVersionId=1187743), [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-2.0)  | 1xL40S  |
 | OdysseyXL 1.0 | Small      | [Civitai](https://civitai.com/models/1055457?modelVersionId=1187335), [HuggingFace](https://huggingface.co/Spestly/OdysseyXL-1.0)  | 1xP100  |
