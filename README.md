@@ -57,7 +57,7 @@ In this option you can use the new OdysseyXL API (Part of spestly package) (3.0+
 pip install spestly
 ```
 
-Now that we have the API system isntalled, we can now use it! A demo is shown below:
+Now that we have the API system installed, we can now use it! A demo is shown below:
 
 ```python
 from spestly import OdysseyXL
