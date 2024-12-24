@@ -36,10 +36,10 @@ The original model that started it all. Great for:
 ---
 
 ## 🛠️ Usage
-
+### Option 1:
 To get started with any OdysseyXL model, install the `diffusers` library and load the model using the following example:
 
-```python
+```bash
 pip install diffusers
 ```
 
@@ -50,7 +50,49 @@ git clone https://github.com/Aayan-Mishra/OdysseyXL.git
 cd OdysseyXL
 python3 download-and-infrence.py
 ```
-and Boom! You can now download the models and inference them!
+### Option 2:
+In this option you can use the new OdysseyXL API (Part of spestly package) (3.0+)!
+
+```bash
+pip install spestly
+```
+
+Now that we have the API system isntalled, we can now use it! A demo is shown below:
+
+```python
+from spestly import OdysseyXL
+
+odysseyxl = OdysseyXL()
+
+# Define the prompt and negative prompt
+prompt = (
+    "An amateur cellphone photography of a black Ferrari. "
+    "f8.0, Samsung Galaxy, noise, jpeg artefacts, poor lighting, low light, "
+    "underexposed, high contrast"
+)
+negative_prompt = (
+    "(octane render, render, drawing, anime, bad photo, bad photography:1.3), "
+    "(worst quality, low quality, blurry:1.2), "
+    "(bad teeth, deformed teeth, deformed lips), "
+    "(bad anatomy, bad proportions:1.1), "
+    "(deformed iris, deformed pupils), "
+    "(deformed eyes, bad eyes), "
+    "(deformed face, ugly face, bad face), "
+    "(deformed hands, bad hands, fused fingers), "
+    "morbid, mutilated, mutation, disfigured"
+)
+
+# Generate the image using the OdysseyXL model version 3.0
+image = odysseyxl.generate(
+    model_version="3.0",
+    prompt=prompt,
+    negative_prompt=negative_prompt,
+)
+
+image.save("output.png")
+image.show()
+```
+
 ---
 
 ## 🌟 Features
