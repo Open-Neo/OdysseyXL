@@ -4,6 +4,7 @@ from rich.table import Table
 from rich.panel import Panel
 import os
 import sys
+import torch  # Import torch to check for GPU availability
 
 # Initialize the console
 console = Console()
@@ -14,11 +15,11 @@ def display_banner():
  ██████╗ ██████╗ ██╗   ██╗███████╗███████╗███████╗██╗   ██╗██╗  ██╗██╗     
 ██╔═══██╗██╔══██╗╚██╗ ██╔╝██╔════╝██╔════╝██╔════╝╚██╗ ██╔╝╚██╗██╔╝██║     
 ██║   ██║██║  ██║ ╚████╔╝ ███████╗███████╗█████╗   ╚████╔╝  ╚███╔╝ ██║     
-██║   ██║██║  ██║  ╚██╔╝  ╚════██║╚════██║██╔══╝    ╚██╔╝   ██╔██╗ ██║     
+██║   ██║██║  ██║  ╚██╔╝  ╚════██║╚════██║██╔══╝    ╚██╔╝   ██╔╝██╗ ██║     
 ╚██████╔╝██████╔╝   ██║   ███████║███████║███████╗   ██║   ██╔╝ ██╗███████╗
  ╚═════╝ ╚═════╝    ╚═╝   ╚══════╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝
                                                                            
-    OdysseyXL Model Inference Script
+    OdysseyXL Model Inference Script v1.1 - By Aayan Mishra
     """
     console.print(Panel(banner, style="bold cyan"))
 
@@ -51,11 +52,47 @@ def choose_model():
         console.print("[bold red]Invalid choice. Please try again.[/]")
         return choose_model()
 
-def download_and_infer(model_name):
+def select_device():
+    if not torch.cuda.is_available():
+        console.print("[bold red]No GPUs detected. Using CPU.[/]")
+        return "cpu"
+
+    gpu_count = torch.cuda.device_count()
+    console.print(f"[bold blue]{gpu_count} GPU(s) detected.[/]")
+
+    if gpu_count == 1:
+        console.print("[bold green]Using the single available GPU.[/]")
+        return "cuda:0"
+
+    # If multiple GPUs are available, prompt the user
+    choice = console.input("[bold yellow]Use all available GPUs? (yes/no): [/] ").strip().lower()
+
+    if choice in ["yes", "y"]:
+        console.print("[bold green]Using all available GPUs for inference.[/]")
+        return "cuda"  # Use all GPUs (data parallelism can be added if needed)
+
+    console.print("[bold green]Using the first GPU only.[/]")
+    return "cuda:0"  # Use only the first GPU
+
+def download_and_infer(model_name, device):
     console.print(f"\n[bold blue]Downloading model: [cyan]{model_name}[/cyan]...[/bold blue]")
     try:
+        # Load the model pipeline and set to the selected device
         pipe = DiffusionPipeline.from_pretrained(model_name)
-        console.print(f"[bold green]Successfully downloaded {model_name}![/bold green]\n")
+        pipe.to(device)  # Move the pipeline to the appropriate device
+        pipe.enable_sequential_cpu_offload()
+        console.print(f"[bold green]Successfully downloaded {model_name} to {device.upper()}![/bold green]\n")
+
+        # Prompt to check if the user wants to use a LoRA
+        use_lora = console.input("[bold yellow]Do you want to use a custom LoRA? (yes/no): [/] ").strip().lower()
+        if use_lora in ["yes", "y"]:
+            lora_path = console.input("[bold yellow]Enter the path to the SDXL LoRA:[/] ").strip()
+            if os.path.exists(lora_path):
+                console.print(f"[bold blue]Loading LoRA from: [cyan]{lora_path}[/cyan]...[/bold blue]")
+                pipe.load_lora_weights(lora_path)
+                console.print("[bold green]LoRA successfully applied![/bold green]")
+            else:
+                console.print("[bold red]Invalid LoRA path. Proceeding without LoRA.[/bold red]")
 
         # Prompt for inference
         prompt = console.input("[bold yellow]Enter your text prompt for inference:[/] ")
@@ -75,7 +112,8 @@ def download_and_infer(model_name):
 def main():
     display_banner()
     model_name = choose_model()
-    download_and_infer(model_name)
+    device = select_device()
+    download_and_infer(model_name, device)
 
 if __name__ == "__main__":
     try:
