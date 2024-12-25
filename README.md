@@ -51,7 +51,7 @@ cd OdysseyXL
 python3 download-and-infrence.py
 ```
 ### Option 2:
-In this option you can use the new OdysseyXL API (Part of spestly package) (3.0+)!
+In this option you can use the new OdysseyXL API (Part of spestly package. Only supports 3.0+)!
 
 ```bash
 pip install spestly
