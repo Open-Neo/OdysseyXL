@@ -20,7 +20,7 @@ The most advanced SOTA generative model in the OdysseyXL Family, OdysseyXL 4.0 i
 Optimized for ultra-realism and vibrant creativity, OdysseyXL 3.0 is perfect for:
 - High-detail art generation
 - Photorealistic renders
-- Creative storytelling
+- Excellent prompt adherence
 
 ### **OdysseyXL 2.0**
 A balanced model combining realism with stylistic flexibility. Ideal for:
