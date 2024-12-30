@@ -8,7 +8,7 @@ Welcome to the **OdysseyXL** family! This repository showcases the cutting-edge 
 
 ## 🚀 Models in the OdysseyXL Family
 
-![Grid](https://raw.githubusercontent.com/Aayan-Mishra/Images/refs/heads/main/OdysseyXL%20FINAL.png)
+![4.0-Grid](https://raw.githubusercontent.com/Aayan-Mishra/Images/refs/heads/main/4.0-Grid.png)
 
 ### **OdysseyXL 4.0**
 The most advanced SOTA generative model in the OdysseyXL Family, OdysseyXL 4.0 is perfect for:
