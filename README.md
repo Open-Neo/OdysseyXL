@@ -45,7 +45,7 @@ pip install diffusers
 
 Now we can the generation script. For this example we will use OdysseyXL-3.0
 
-```python
+```bash
 git clone https://github.com/Aayan-Mishra/OdysseyXL.git
 cd OdysseyXL
 python3 download-and-infrence.py
