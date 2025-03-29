@@ -11,13 +11,13 @@ Welcome to the **OdysseyXL** family! This repository showcases the cutting-edge 
 ![4.0-Grid](https://raw.githubusercontent.com/Aayan-Mishra/Images/refs/heads/main/4.0-Grid.png)
 
 ### **OdysseyXL V2.5**
-The most advanced SOTA generative model in the OdysseyXL Family, OdysseyXL 4.0 is perfect for:
+The most advanced SOTA generative model in the OdysseyXL Family, OdysseyXL V2.5 is perfect for:
 - Ultra realism
 - Full potential of OdysseyXL
 - Cinematic and photographic images
 
 ### **OdysseyXL V2**
-Optimized for ultra-realism and vibrant creativity, OdysseyXL 3.0 is perfect for:
+Optimized for ultra-realism and vibrant creativity, OdysseyXL V2 is perfect for:
 - High-detail art generation
 - Photorealistic renders
 - Excellent prompt adherence
@@ -46,7 +46,7 @@ pip install diffusers
 Now we can the generation script. For this example we will use OdysseyXL-3.0
 
 ```bash
-git clone https://github.com/Aayan-Mishra/OdysseyXL.git
+git clone https://github.com/Open-Neo/OdysseyXL.git
 cd OdysseyXL
 python3 download-and-infrence.py
 ```
@@ -83,7 +83,7 @@ All models in the OdysseyXL family are shared under the **OdysseyXL Community Co
 Join the OdysseyXL community to share your creations, report issues, and stay updated:
 
 - **Discord**: Coming Soon
-- **Twitter**: [@Spestly](https://twitter.com/Spestly)
+- **Twitter**: [@Open-Neo](https://twitter.com/Spestly)
 - **Submit your generated images!**: [Submit](https://tally.so/r/mZPblv)
 
 
