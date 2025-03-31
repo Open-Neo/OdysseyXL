@@ -1,23 +1,88 @@
 import gradio as gr
-from diffusers import DiffusionPipeline
-from PIL import Image
+import numpy as np
+import random
+import torch
+from diffusers import StableDiffusionXLPipeline, AutoencoderKL
 
-# Load the models
-def load_pipeline(version):
-    model_name = f"Spestly/OdysseyXL-{version}"
-    return DiffusionPipeline.from_pretrained(model_name)
+dtype = torch.float16
+device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# Function to generate an image
-def generate_image(version, prompt):
-    # Load the selected pipeline
-    pipe = load_pipeline(version)
+MAX_SEED = np.iinfo(np.int32).max
+MAX_IMAGE_SIZE = 2048
+
+def load_model(model_name):
+    pipe = StableDiffusionXLPipeline.from_pretrained(
+        model_name, 
+        torch_dtype=dtype,
+        use_safetensors=True
+    ).to(device)
+    return pipe
+
+pipe = load_model("open-neo/OdysseyXL-Origin")
+torch.cuda.empty_cache()
+
+def generate_image_iterator(pipe, prompt, guidance_scale, num_inference_steps, width, height, generator):
+    from tqdm.auto import tqdm
+    progress_bar = tqdm(total=num_inference_steps)
+    
+    def callback(step, timestep, latents):
+        progress_bar.update(1)
+        # TO DO: Decode Latents here
+
+    
+    image = pipe(
+        prompt=prompt,
+        guidance_scale=guidance_scale,
+        num_inference_steps=num_inference_steps,
+        width=width,
+        height=height,
+        generator=generator,
+        callback=callback,
+        callback_steps=1
+    ).images[0]
+    
+    progress_bar.close()
+    return image
+
+def infer(prompt, model_name, seed=42, randomize_seed=False, width=1024, height=1024, guidance_scale=7.5, num_inference_steps=30, progress=gr.Progress(track_tqdm=True)):
+    global pipe
+    
+    if not hasattr(pipe, 'current_model') or pipe.current_model != model_name:
+        pipe = load_model(model_name)
+        pipe.current_model = model_name
+        torch.cuda.empty_cache()
+    
+    if randomize_seed:
+        seed = random.randint(0, MAX_SEED)
+    generator = torch.Generator(device=device).manual_seed(seed)
     
     # Generate the image
-    image = pipe(prompt).images[0]
+    progress(0, desc="Generating image...")
+    image = generate_image_iterator(
+        pipe=pipe,
+        prompt=prompt,
+        guidance_scale=guidance_scale,
+        num_inference_steps=num_inference_steps,
+        width=width,
+        height=height,
+        generator=generator
+    )
     
-    # Return the generated image
-    return image
-    
+    return image, seed
+
+examples = [
+    "a tiny astronaut hatching from an egg on the moon",
+    "a cat holding a sign that says hello world",
+    "an anime illustration of a wiener schnitzel",
+]
+
+sdxl_models = [
+    "open-neo/OdysseyXL-Origin",
+    "open-neo/OdysseyXL-V1",
+    "open-neo/OdysseyXL-V2",
+    "open-neo/OdysseyXL-V2.5",
+]
+
 css="""
 #col-container {
     margin: 0 auto;
@@ -25,56 +90,93 @@ css="""
 }
 """
 
-# Define the Gradio interface with custom design
 with gr.Blocks(css=css) as demo:
-    with gr.Row():
-        gr.Markdown("<h1>✨ OdysseyXL Image Generator ✨</h1>")
     
-    gr.Markdown(
-        """
-        <h2>🎨 Create stunning AI-generated images!</h2>
-        <p style='text-align:center;'>
-            Select a model version, enter a descriptive text prompt, and let OdysseyXL bring your imagination to life.
-        </p>
-        """
-    )
-    
-    with gr.Row():
-        with gr.Column(scale=1):
-            version = gr.Dropdown(
-                ["3.0", "2.0", "1.0"], 
-                value="3.0", 
-                label="🛠 Select Model Version", 
-                interactive=True
+    with gr.Column(elem_id="col-container"):
+        gr.Markdown(f"""# OdysseyXL Image Playground
+        """)
+        
+        with gr.Row():
+            model_selector = gr.Dropdown(
+                label="Model",
+                choices=sdxl_models,
+                value=sdxl_models[0]
             )
-        with gr.Column(scale=2):
-            prompt = gr.Textbox(
-                value="Astronaut in a jungle, cold color palette, muted colors, detailed, 8k", 
-                label="💡 Enter Your Prompt", 
-                lines=2, 
-                placeholder="Describe the image you want to generate..."
+        
+        with gr.Row():
+            prompt = gr.Text(
+                label="Prompt",
+                show_label=False,
+                max_lines=1,
+                placeholder="Enter your prompt",
+                container=False,
             )
-    
-    with gr.Row():
-        generate_button = gr.Button("🚀 Generate Image", elem_id="generate-button")
-    
-    with gr.Row():
-        image_output = gr.Image(label="Generated Image", type="numpy", elem_id="output-image")
-    
-    generate_button.click(
-        fn=generate_image, 
-        inputs=[version, prompt], 
-        outputs=image_output
+            
+            run_button = gr.Button("Run", scale=0)
+        
+        result = gr.Image(label="Result", show_label=False)
+        
+        with gr.Accordion("Advanced Settings", open=False):
+            
+            seed = gr.Slider(
+                label="Seed",
+                minimum=0,
+                maximum=MAX_SEED,
+                step=1,
+                value=0,
+            )
+            
+            randomize_seed = gr.Checkbox(label="Randomize seed", value=True)
+            
+            with gr.Row():
+                
+                width = gr.Slider(
+                    label="Width",
+                    minimum=256,
+                    maximum=MAX_IMAGE_SIZE,
+                    step=32,
+                    value=1024,
+                )
+                
+                height = gr.Slider(
+                    label="Height",
+                    minimum=256,
+                    maximum=MAX_IMAGE_SIZE,
+                    step=32,
+                    value=1024,
+                )
+            
+            with gr.Row():
+
+                guidance_scale = gr.Slider(
+                    label="Guidance Scale",
+                    minimum=1,
+                    maximum=15,
+                    step=0.1,
+                    value=7.5,
+                )
+  
+                num_inference_steps = gr.Slider(
+                    label="Number of inference steps",
+                    minimum=1,
+                    maximum=50,
+                    step=1,
+                    value=30,
+                )
+        
+        gr.Examples(
+            examples=examples,
+            fn=infer,
+            inputs=[prompt, model_selector],
+            outputs=[result, seed],
+            cache_examples="lazy"
+        )
+
+    gr.on(
+        triggers=[run_button.click, prompt.submit],
+        fn=infer,
+        inputs=[prompt, model_selector, seed, randomize_seed, width, height, guidance_scale, num_inference_steps],
+        outputs=[result, seed]
     )
 
-    gr.Markdown(
-        """
-        <div class="footer">
-            <p>Developed with ❤️ by <a href="https://github.com/Aayan-Mishra" target="_blank">Spestly</a></p>
-        </div>
-        """
-    )
-
-# Run the app
-if __name__ == "__main__":
-    demo.launch()
+demo.launch()
